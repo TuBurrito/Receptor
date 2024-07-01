@@ -6,12 +6,14 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
 import com.example.burrito.ui.theme.App
 import com.example.burrito.ui.theme.BurritoTheme
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+
 
 class MainActivity : ComponentActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -49,5 +51,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getLocation()
+    }
+    @Composable
+    fun DefaultPreview() {
+        BurritoTheme {
+        }
     }
 }

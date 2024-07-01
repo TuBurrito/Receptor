@@ -1,0 +1,492 @@
+{
+  "name": "interfaz_burrito",
+  "version": 33,
+  "source-key": {
+    "type": "figma",
+    "file": "vlQKNaLK0T99WLonrJ1pHI",
+    "node": "0:3",
+    "version": "6117803429",
+    "component-id": "a16deb2246d629d41df1aec0cc67915f3d866341"
+  },
+  "default": "Interfaz_Burrito",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 5"
+      },
+      {
+        "type": "text",
+        "id": "Pasa en:"
+      },
+      {
+        "type": "text",
+        "id": "Paradero Letras"
+      },
+      {
+        "type": "text",
+        "id": "Lugar:"
+      },
+      {
+        "type": "text",
+        "id": "min seg"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 6"
+      },
+      {
+        "type": "text",
+        "id": "04:10"
+      },
+      {
+        "type": "image",
+        "id": "BURRITO 1"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 7"
+      },
+      {
+        "type": "text",
+        "id": "Horarios de atencion"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 9"
+      },
+      {
+        "type": "text",
+        "id": "CON GPS"
+      }
+    ],
+    "modes": {
+      "Interfaz_Burrito": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": false,
+            "children": [
+              "Rectangle 5",
+              "Pasa en:",
+              "Paradero Letras",
+              "Lugar:",
+              "min seg",
+              "Rectangle 6",
+              "04:10",
+              "BURRITO 1",
+              "Rectangle 7",
+              "Horarios de atencion",
+              "Rectangle 9",
+              "CON GPS"
+            ]
+          },
+          {
+            "id": "Rectangle 5",
+            "border-radius": 45.0,
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 0.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 387.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 375.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 322.0
+              }
+            },
+            "vector-content": "rectangle_5.svg"
+          },
+          {
+            "id": "Pasa en:",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 188.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 419.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 139.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 19.0
+              }
+            },
+            "font-weight": 500.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "Pasa en: ",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": 18.0,
+            "line-height": 1.2102272245619032,
+            "typeface": "Inter"
+          },
+          {
+            "id": "Paradero Letras",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 252.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 532.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 98.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 28.0
+              }
+            },
+            "font-weight": 800.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 42.580645161290334,
+              "saturation": 0.1215686274509804,
+              "value": 1.0
+            },
+            "text-content": "Paradero Letras",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": 20.0,
+            "line-height": 1.2102272033691406,
+            "typeface": "Inter"
+          },
+          {
+            "id": "Lugar:",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 188.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 527.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 19.0
+              }
+            },
+            "font-weight": 500.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "Lugar:",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": 18.0,
+            "line-height": 1.2102272245619032,
+            "typeface": "Inter"
+          },
+          {
+            "id": "min seg",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 167.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 497.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 139.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 19.0
+              }
+            },
+            "font-weight": 500.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "min seg",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align-vertical": "center",
+            "text-size": 16.0,
+            "line-height": 1.2102272510528564,
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 6",
+            "border-radius": 10.0,
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 188.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 449.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 97.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 48.0
+              }
+            },
+            "vector-content": "rectangle_6.svg"
+          },
+          {
+            "id": "04:10",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 188.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 462.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 97.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 22.0
+              }
+            },
+            "font-weight": 500.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 210.0000000000001,
+              "saturation": 0.048780487804878044,
+              "value": 0.1607843137254902
+            },
+            "text-content": "04:10",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align-vertical": "center",
+            "text-size": 30.0,
+            "line-height": 1.2102272033691406,
+            "typeface": "Inter"
+          },
+          {
+            "id": "BURRITO 1",
+            "border-radius": 35.0,
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 30.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 419.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 139.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 134.0
+              }
+            },
+            "image-content": "burrito_1.png",
+            "scale": "cover"
+          },
+          {
+            "id": "Rectangle 7",
+            "border-radius": 10.0,
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 57.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 591.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 262.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 41.0
+              }
+            },
+            "vector-content": "rectangle_7.svg"
+          },
+          {
+            "id": "Horarios de atencion",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 131.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 603.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 114.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 17.0
+              }
+            },
+            "font-weight": 500.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "Horarios de atencion",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align-vertical": "center",
+            "line-height": 1.2102272851126534,
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 9",
+            "border-radius": 10.0,
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 59.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 546.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 84.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 19.0
+              }
+            },
+            "vector-content": "rectangle_9.svg"
+          },
+          {
+            "id": "CON GPS",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": 45.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 547.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 114.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 17.0
+              }
+            },
+            "font-weight": 500.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 210.0000000000001,
+              "saturation": 0.048780487804878044,
+              "value": 0.1607843137254902
+            },
+            "text-content": "CON GPS",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align-vertical": "center",
+            "text-size": 12.0,
+            "line-height": 1.2102272510528564,
+            "typeface": "Inter"
+          }
+        ]
+      }
+    }
+  },
+  "previews": [
+    {
+      "design": "Interfaz_Burrito",
+      "size": {
+        "width": 375.0,
+        "height": 667.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
