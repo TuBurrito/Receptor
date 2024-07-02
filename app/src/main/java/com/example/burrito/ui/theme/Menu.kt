@@ -124,7 +124,7 @@ fun Menu(userLocation: LatLng,burritoLocation: LatLng, modifier: Modifier = Modi
                             alignment = Alignment.TopStart,
                             offset = DpOffset(
                                 x = 252.0.dp,
-                                y = 142.0.dp
+                                y = 155.0.dp
                             )
                         ),
                         content = paradero
@@ -134,7 +134,7 @@ fun Menu(userLocation: LatLng,burritoLocation: LatLng, modifier: Modifier = Modi
                             alignment = Alignment.TopStart,
                             offset = DpOffset(
                                 x = 188.0.dp,
-                                y = 142.0.dp
+                                y = 155.0.dp
                             )
                         )
                     )
