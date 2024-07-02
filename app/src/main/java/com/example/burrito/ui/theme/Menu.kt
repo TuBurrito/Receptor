@@ -59,16 +59,18 @@ fun getParadero(burritoLocation: LatLng, paraderos:Map<String,LatLng>):String{
 }
 
 fun getTiempo(userLocation: LatLng, burritoLocation: LatLng): String {
-    val burritoSpeed = 30
-    val latitudeDistance =(userLocation.latitude - burritoLocation.latitude)*111000.32
-    val longitudeDistance = 40075000*cos(latitudeDistance)/360
-    val distance = sqrt(
-        (latitudeDistance).pow(2.0) + (longitudeDistance).pow(
-        2.0
-    )
-    )
+    val burritoSpeed = 10
+    var R = 6378.137; // Radius of earth in KM
+    var dLat = userLocation.latitude * Math.PI / 180 - burritoLocation.latitude * Math.PI / 180;
+    var dLon = userLocation.longitude * Math.PI / 180 - burritoLocation.longitude * Math.PI / 180;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(burritoLocation.latitude * Math.PI / 180) * Math.cos(userLocation.latitude * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    val distance= d * 1000;
     val tiempoSegundos:Int = distance.toInt()/burritoSpeed
-    return "${tiempoSegundos/60}:${tiempoSegundos%60}"
+    return "${tiempoSegundos/60}:${if(tiempoSegundos%60<10){"0"} else{""}}${tiempoSegundos%60}"
 }
 
 @Composable
