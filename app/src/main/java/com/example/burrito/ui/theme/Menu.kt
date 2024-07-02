@@ -1,12 +1,20 @@
 package com.example.burrito.ui.theme
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -80,120 +88,134 @@ fun Menu(userLocation: LatLng,burritoLocation: LatLng, modifier: Modifier = Modi
         Pair("Paradero Industrial", LatLng(-12.060452905428926, -77.08137251616793)))
     var tiempo = getTiempo(userLocation, burritoLocation)
     val paradero = getParadero(burritoLocation,locationParaderos)
-    Box {
-        TopLevel(modifier = modifier) {
-            Contenedor_Principal(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 0.0.dp,
-                        y = 387.0.dp
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ){
+            Box (
+                modifier = Modifier
+                    .height(350.dp)
+                    .width(400.dp),
+            ){
+                TopLevel(modifier = modifier) {
+                    Contenedor_Principal(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 0.0.dp,
+                                y = 0.0.dp
+                            )
+                        )
                     )
-                )
-            )
-            PasaEn(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 188.0.dp,
-                        y = 419.0.dp
+                    PasaEn(
+                        modifier = Modifier.padding(
+                            horizontal = 240.dp,
+                            vertical = 40.dp,
+                        ),
+
+
                     )
-                )
-            )
-            Paradero(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 252.0.dp,
-                        y = 532.0.dp
+                    Paradero(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 252.0.dp,
+                                y = 142.0.dp
+                            )
+                        ),
+                        content = paradero
                     )
-                ),
-                content = paradero
-            )
-            Lugar(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 188.0.dp,
-                        y = 527.0.dp
+                    Lugar(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 188.0.dp,
+                                y = 142.0.dp
+                            )
+                        )
                     )
-                )
-            )
-            MinSeg(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 167.0.dp,
-                        y = 497.0.dp
+                    MinSeg(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 167.0.dp,
+                                y = 120.0.dp
+                            )
+                        )
                     )
-                )
-            )
-            Contenedor_Tiempo(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 188.0.dp,
-                        y = 449.0.dp
+                    Contenedor_Tiempo(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 188.0.dp,
+                                y = 72.0.dp
+                            )
+                        )
                     )
-                )
-            )
-            Tiempo(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 188.0.dp,
-                        y = 462.0.dp
+                    Tiempo(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 188.0.dp,
+                                y = 85.0.dp
+                            )
+                        ),
+                        content = tiempo
                     )
-                ),
-                content = tiempo
-            )
-            Imagen_Referencial(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 30.0.dp,
-                        y = 419.0.dp
+                    Imagen_Referencial(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 30.0.dp,
+                                y = 42.0.dp//
+                            )
+                        )
                     )
-                )
-            )
-            Contenedor_Horarios(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 57.0.dp,
-                        y = 591.0.dp
+                    Contenedor_Horarios(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 57.0.dp,
+                                y = 214.0.dp
+                            )
+                        )
                     )
-                )
-            )
-            HorariosDeAtencion(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 131.0.dp,
-                        y = 603.0.dp
+                    HorariosDeAtencion(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 131.0.dp,
+                                y = 226.0.dp//603
+                            )
+                        )
                     )
-                )
-            )
-            Contendor_GPS(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 59.0.dp,
-                        y = 546.0.dp
+                    Contendor_GPS(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 59.0.dp,
+                                y = 174.0.dp
+                            )
+                        )
                     )
-                )
-            )
-            CONGPS(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 45.0.dp,
-                        y = 547.0.dp
+                    CONGPS(
+                        modifier = Modifier.boxAlign(
+                            alignment = Alignment.TopStart,
+                            offset = DpOffset(
+                                x = 45.0.dp,
+                                y = 175.0.dp
+                            )
+                        )
                     )
-                )
-            )
+                }
+            }
         }
     }
+
 }
 
 
@@ -324,7 +346,7 @@ fun Contenedor_Tiempo(modifier: Modifier = Modifier) {
 fun Tiempo(modifier: Modifier = Modifier, content: String) {
     RelayText(
         content = content,
-        fontSize = 30.0.sp,
+        fontSize = 25.0.sp,
         fontFamily = inter,
         color = Color(
             alpha = 255,
