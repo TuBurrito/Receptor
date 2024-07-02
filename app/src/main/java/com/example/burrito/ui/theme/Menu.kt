@@ -188,8 +188,8 @@ fun Menu(userLocation: LatLng,burritoLocation: LatLng, modifier: Modifier = Modi
                         modifier = Modifier.boxAlign(
                             alignment = Alignment.TopStart,
                             offset = DpOffset(
-                                x = 131.0.dp,
-                                y = 226.0.dp//603
+                                x = 64.0.dp,
+                                y = 220.0.dp//603
                             )
                         )
                     )
@@ -385,7 +385,7 @@ fun Contenedor_Horarios(modifier: Modifier = Modifier) {
         vector = painterResource(R.drawable.interfaz_burrito_rectangle_7),
         modifier = modifier
             .requiredWidth(262.0.dp)
-            .requiredHeight(102.0.dp)
+            .requiredHeight(12.0.dp)
     )
 }
 
@@ -393,7 +393,7 @@ fun Contenedor_Horarios(modifier: Modifier = Modifier) {
 fun HorariosDeAtencion(modifier: Modifier = Modifier) {
         RelayText(
             content = "Horario de atencion\n Lunes a Viernes de 7:30am a 9:30pm",
-            fontSize = 12.0.sp,
+            fontSize = 10.5.sp,
             fontFamily = inter,
             color = Color(
                 alpha = 255,
@@ -401,11 +401,11 @@ fun HorariosDeAtencion(modifier: Modifier = Modifier) {
                 green = 255,
                 blue = 255
             ),
-            height = 1.2102272851126534.em,
+            height = 1.21.em,
             fontWeight = FontWeight(500.0.toInt()),
             maxLines = -1,
             modifier = modifier
-                .requiredWidth(114.0.dp)
+                .requiredWidth(250.0.dp)
                 .requiredHeight(34.0.dp)
         )
 }
