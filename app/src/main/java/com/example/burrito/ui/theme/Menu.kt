@@ -1,12 +1,13 @@
 package com.example.burrito.ui.theme
 
-
+import android.util.Log
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,12 +16,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.burrito.R
+import com.google.android.gms.maps.model.LatLng
 import com.google.relay.compose.RelayContainer
 import com.google.relay.compose.RelayContainerScope
 import com.google.relay.compose.RelayImage
@@ -31,136 +32,178 @@ import com.google.relay.compose.RelayVector
  * This composable was generated from the UI Package 'interfaz_burrito'.
  * Generated code; do not edit directly
  */
-@Composable
-fun Menu(modifier: Modifier = Modifier) {
+import kotlinx.coroutines.*
+import okhttp3.*
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sqrt
 
-    TopLevel(modifier = modifier) {
-        Contenedor_Principal(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 0.0.dp,
-                    y = 387.0.dp
-                )
-            )
-        )
-        PasaEn(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 188.0.dp,
-                    y = 419.0.dp
-                )
-            )
-        )
-        Paradero(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 252.0.dp,
-                    y = 532.0.dp
-                )
-            )
-        )
-        Lugar(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 188.0.dp,
-                    y = 527.0.dp
-                )
-            )
-        )
-        MinSeg(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 167.0.dp,
-                    y = 497.0.dp
-                )
-            )
-        )
-        Contenedor_Tiempo(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 188.0.dp,
-                    y = 449.0.dp
-                )
-            )
-        )
-        Tiempo(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 188.0.dp,
-                    y = 462.0.dp
-                )
-            )
-        )
-        Imagen_Referencial(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 30.0.dp,
-                    y = 419.0.dp
-                )
-            )
-        )
-        Contenedor_Horarios(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 57.0.dp,
-                    y = 591.0.dp
-                )
-            )
-        )
-        HorariosDeAtencion(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 131.0.dp,
-                    y = 603.0.dp
-                )
-            )
-        )
-        Contendor_GPS(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 59.0.dp,
-                    y = 546.0.dp
-                )
-            )
-        )
-        CONGPS(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 45.0.dp,
-                    y = 547.0.dp
-                )
-            )
-        )
-    }
+var showHorarios = false
+
+fun getDistance(it: Map.Entry<String, LatLng>?, burritoLocation: LatLng): Double {
+    return it?.value?.latitude!!.minus(burritoLocation.latitude).pow(2.0) +it.value.longitude.minus(burritoLocation.longitude).pow(2.0)
 }
 
-@Preview(widthDp = 375, heightDp = 667)
+fun getParadero(burritoLocation: LatLng, paraderos:Map<String,LatLng>):String{
+     return paraderos.entries.stream().reduce{acc,it ->
+         return@reduce if (getDistance(it,burritoLocation) <= getDistance(acc,burritoLocation)) it else acc
+     }.orElse(null).key
+}
+
+fun getTiempo(userLocation: LatLng, burritoLocation: LatLng): String {
+    val burritoSpeed = 30
+    val latitudeDistance =(userLocation.latitude - burritoLocation.latitude)*111000.32
+    val longitudeDistance = 40075000*cos(latitudeDistance)/360
+    val distance = sqrt(
+        (latitudeDistance).pow(2.0) + (longitudeDistance).pow(
+        2.0
+    )
+    )
+    val tiempoSegundos:Int = distance.toInt()/burritoSpeed
+    return "${tiempoSegundos/60}:${tiempoSegundos%60}"
+}
+
 @Composable
-private fun InterfazBurritoPreview() {
-    MaterialTheme {
-        RelayContainer {
-            Menu(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f))
+fun Menu(userLocation: LatLng,burritoLocation: LatLng, modifier: Modifier = Modifier) {
+    Log.d("burrito:",burritoLocation.toString())
+    Log.d("user:",userLocation.toString())
+    var locationParaderos = hashMapOf(
+        Pair("Paradero Puerta 2",LatLng(-12.05959341333829, -77.07960137731172)),
+        Pair("Paradero Puerta 3",LatLng(-12.057172024474827, -77.08026173038515)),
+        Pair("Paradero Clinica Universitaria", LatLng(-12.055547892654287, -77.08208900877857)),
+        Pair("Paradero Puerta 7",LatLng(-12.053996601875435, -77.08470504070014)),
+        Pair("Paradero FISI", LatLng(-12.053670915389079, -77.08569974621102)),
+        Pair("Paradero Odontologia", LatLng(-12.054883667022704, -77.08598457383381)),
+        Pair("Paradero Rectorado", LatLng(-12.056892263863233, -77.08559688387052)),
+        Pair("Paradero Huaca San Marcos", LatLng(-12.060358132901312, -77.08556691009252)),
+        Pair("Paradero Comedor", LatLng(-12.060792420456595, -77.08332604156331)),
+        Pair("Paradero Industrial", LatLng(-12.060452905428926, -77.08137251616793)))
+    var tiempo = getTiempo(userLocation, burritoLocation)
+    val paradero = getParadero(burritoLocation,locationParaderos)
+    Box {
+        TopLevel(modifier = modifier) {
+            Contenedor_Principal(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 0.0.dp,
+                        y = 387.0.dp
+                    )
+                )
+            )
+            PasaEn(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 188.0.dp,
+                        y = 419.0.dp
+                    )
+                )
+            )
+            Paradero(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 252.0.dp,
+                        y = 532.0.dp
+                    )
+                ),
+                content = paradero
+            )
+            Lugar(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 188.0.dp,
+                        y = 527.0.dp
+                    )
+                )
+            )
+            MinSeg(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 167.0.dp,
+                        y = 497.0.dp
+                    )
+                )
+            )
+            Contenedor_Tiempo(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 188.0.dp,
+                        y = 449.0.dp
+                    )
+                )
+            )
+            Tiempo(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 188.0.dp,
+                        y = 462.0.dp
+                    )
+                ),
+                content = tiempo
+            )
+            Imagen_Referencial(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 30.0.dp,
+                        y = 419.0.dp
+                    )
+                )
+            )
+            Contenedor_Horarios(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 57.0.dp,
+                        y = 591.0.dp
+                    )
+                )
+            )
+            HorariosDeAtencion(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 131.0.dp,
+                        y = 603.0.dp
+                    )
+                )
+            )
+            Contendor_GPS(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 59.0.dp,
+                        y = 546.0.dp
+                    )
+                )
+            )
+            CONGPS(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 45.0.dp,
+                        y = 547.0.dp
+                    )
+                )
+            )
         }
     }
 }
+
 
 @Composable
 fun Contenedor_Principal(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.interfaz_burrito_rectangle_5),
-        modifier = modifier.requiredWidth(375.0.dp).requiredHeight(322.0.dp)
+        modifier = modifier
+            .requiredWidth(375.0.dp)
+            .requiredHeight(322.0.dp)
     )
 }
 
@@ -180,18 +223,21 @@ fun PasaEn(modifier: Modifier = Modifier) {
         textAlign = TextAlign.Left,
         fontWeight = FontWeight(500.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(139.0.dp).requiredHeight(19.0.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(139.0.dp)
+            .requiredHeight(19.0.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
 @Composable
-fun Paradero(modifier: Modifier = Modifier) {
+fun Paradero(modifier: Modifier = Modifier, content: String) {
     RelayText(
-        content = "Paradero Letras",
-        fontSize = 20.0.sp,
+        content = content,
+        fontSize = 12.0.sp,
         fontFamily = inter,
         color = Color(
             alpha = 255,
@@ -201,12 +247,15 @@ fun Paradero(modifier: Modifier = Modifier) {
         ),
         height = 1.2102272033691406.em,
         textAlign = TextAlign.Left,
-        fontWeight = FontWeight(800.0.toInt()),
+        fontWeight = FontWeight(500.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(98.0.dp).requiredHeight(28.0.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(98.0.dp)
+            .requiredHeight(28.0.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -226,10 +275,13 @@ fun Lugar(modifier: Modifier = Modifier) {
         textAlign = TextAlign.Left,
         fontWeight = FontWeight(500.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(64.0.dp).requiredHeight(19.0.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(64.0.dp)
+            .requiredHeight(19.0.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -248,10 +300,13 @@ fun MinSeg(modifier: Modifier = Modifier) {
         height = 1.2102272510528564.em,
         fontWeight = FontWeight(500.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(139.0.dp).requiredHeight(19.0.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(139.0.dp)
+            .requiredHeight(19.0.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -259,14 +314,16 @@ fun MinSeg(modifier: Modifier = Modifier) {
 fun Contenedor_Tiempo(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.interfaz_burrito_rectangle_6),
-        modifier = modifier.requiredWidth(97.0.dp).requiredHeight(48.0.dp)
+        modifier = modifier
+            .requiredWidth(97.0.dp)
+            .requiredHeight(48.0.dp)
     )
 }
 
 @Composable
-fun Tiempo(modifier: Modifier = Modifier) {
+fun Tiempo(modifier: Modifier = Modifier, content: String) {
     RelayText(
-        content = "04:10",
+        content = content,
         fontSize = 30.0.sp,
         fontFamily = inter,
         color = Color(
@@ -278,10 +335,13 @@ fun Tiempo(modifier: Modifier = Modifier) {
         height = 1.2102272033691406.em,
         fontWeight = FontWeight(500.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(97.0.dp).requiredHeight(22.0.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(97.0.dp)
+            .requiredHeight(22.0.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -291,7 +351,9 @@ fun Imagen_Referencial(modifier: Modifier = Modifier) {
         image = painterResource(R.drawable.interfaz_burrito_burrito_1),
         radius = 35.0,
         contentScale = ContentScale.Crop,
-        modifier = modifier.requiredWidth(139.0.dp).requiredHeight(134.0.dp)
+        modifier = modifier
+            .requiredWidth(139.0.dp)
+            .requiredHeight(134.0.dp)
     )
 }
 
@@ -299,36 +361,40 @@ fun Imagen_Referencial(modifier: Modifier = Modifier) {
 fun Contenedor_Horarios(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.interfaz_burrito_rectangle_7),
-        modifier = modifier.requiredWidth(262.0.dp).requiredHeight(41.0.dp)
+        modifier = modifier
+            .requiredWidth(262.0.dp)
+            .requiredHeight(102.0.dp)
     )
 }
 
 @Composable
 fun HorariosDeAtencion(modifier: Modifier = Modifier) {
-    RelayText(
-        content = "Horarios de atencion",
-        fontFamily = inter,
-        color = Color(
-            alpha = 255,
-            red = 255,
-            green = 255,
-            blue = 255
-        ),
-        height = 1.2102272851126534.em,
-        fontWeight = FontWeight(500.0.toInt()),
-        maxLines = -1,
-        modifier = modifier.requiredWidth(114.0.dp).requiredHeight(17.0.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
+        RelayText(
+            content = "Horario de atencion\n Lunes a Viernes de 7:30am a 9:30pm",
+            fontSize = 12.0.sp,
+            fontFamily = inter,
+            color = Color(
+                alpha = 255,
+                red = 255,
+                green = 255,
+                blue = 255
+            ),
+            height = 1.2102272851126534.em,
+            fontWeight = FontWeight(500.0.toInt()),
+            maxLines = -1,
+            modifier = modifier
+                .requiredWidth(114.0.dp)
+                .requiredHeight(34.0.dp)
         )
-    )
 }
 
 @Composable
 fun Contendor_GPS(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.interfaz_burrito_rectangle_9),
-        modifier = modifier.requiredWidth(84.0.dp).requiredHeight(19.0.dp)
+        modifier = modifier
+            .requiredWidth(84.0.dp)
+            .requiredHeight(19.0.dp)
     )
 }
 
@@ -347,10 +413,13 @@ fun CONGPS(modifier: Modifier = Modifier) {
         height = 1.2102272510528564.em,
         fontWeight = FontWeight(500.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(114.0.dp).requiredHeight(17.0.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(114.0.dp)
+            .requiredHeight(17.0.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -362,6 +431,8 @@ fun TopLevel(
     RelayContainer(
         isStructured = false,
         content = content,
-        modifier = modifier.fillMaxWidth(1.0f).fillMaxHeight(1.0f)
+        modifier = modifier
+            .fillMaxWidth(1.0f)
+            .fillMaxHeight(1.0f)
     )
 }

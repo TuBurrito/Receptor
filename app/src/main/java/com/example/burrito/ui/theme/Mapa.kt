@@ -24,13 +24,12 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun Mapa(userLocation:LatLng){
+fun Mapa(userLocation:LatLng, burritoLocation: LatLng){
 
-    val burritoCords = LatLng(-12.057533696473644,-77.08309463610522)
+    val cameraLocation = LatLng(-12.057533696473644,-77.08309463610522)
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(burritoCords, 20f)
+        position = CameraPosition.fromLatLngZoom(cameraLocation, 20f)
     }
-    var locationBurrito = LatLng(-12.059535337281902, -77.07965054520353)
     var locationUsuario = userLocation
     val pointsParaderos = listOf(
         LatLng(-12.0596243, -77.0796382),  // Punto 5
@@ -108,7 +107,7 @@ fun Mapa(userLocation:LatLng){
         cameraPositionState = cameraPositionState
     ){
         Marker(icon = BitmapDescriptorFactory.fromResource(R.mipmap.burrito_marker),
-            state = MarkerState(position = locationBurrito))
+            state = MarkerState(position = burritoLocation))
         Marker(icon = BitmapDescriptorFactory.fromResource(R.mipmap.usuario_marker),
         state = MarkerState(position = locationUsuario)
         )
@@ -116,10 +115,6 @@ fun Mapa(userLocation:LatLng){
             Marker(contentDescription = it.key,state=MarkerState(position=it.value))
         }
         Polyline(points = pointsParaderos, color = Color.Cyan, width = 5f)
-        Polyline(
-            points = listOf(locationUsuario, locationBurrito),
-            color = androidx.compose.ui.graphics.Color.Blue, // Customize the color
-            width = 5f // Customize the width
-        )
+
     }
 }

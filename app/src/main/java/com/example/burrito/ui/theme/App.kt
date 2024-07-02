@@ -8,11 +8,11 @@ import androidx.compose.ui.Modifier
 import com.google.android.gms.maps.model.LatLng
 
 @Composable
-fun App(userLocation:LatLng){
+fun App(userLocation:LatLng,burritoLocation:LatLng){
     MaterialTheme(){
         Box(modifier = Modifier.fillMaxSize()) {
-            Mapa(userLocation)
-            Menu()
+            Mapa(userLocation,burritoLocation)
+            Menu(userLocation, burritoLocation)
         }
     }
 }
